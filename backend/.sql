@@ -84,5 +84,13 @@ INSERT INTO categories (id, name, created_at) VALUES
 
 -- Insert default admin user (password: 123)
 INSERT INTO users (id, name, email, password_hash, role, created_at) VALUES
-('1', 'Administrador Principal', 'admin@gtatech.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'ADMIN', NOW()),
-('1', 'João Vendedor', 'vendedor@gtatech.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'SELLER', NOW());
+('user-1', 'Administrador Principal', 'admin@gtatech.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'ADMIN', NOW()),
+('user-2', 'João Vendedor', 'vendedor@gtatech.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'SELLER', NOW());
+
+-- Insert default products
+INSERT INTO products (id, name, description, price_in_cents, stock, category_id, image_url, created_at) VALUES
+('101', 'Smartphone X Pro', 'Última geração, 256GB', 350000, 15, 'cat-1', 'https://picsum.photos/200/200?random=1', NOW()),
+('102', 'Notebook Gamer GTA', 'i7 12th Gen, RTX 3060', 780000, 5, 'cat-2', 'https://picsum.photos/200/200?random=2', NOW()),
+('103', 'Fone Bluetooth NoiseCancel', 'Isolamento acústico ativo', 45000, 30, 'cat-3', 'https://picsum.photos/200/200?random=3', NOW()),
+('104', 'Monitor 4K 27"', 'IPS, 144Hz', 220000, 8, 'cat-4', 'https://picsum.photos/200/200?random=4', NOW()),
+('105', 'Teclado Mecânico RGB', 'Switch Blue', 35000, 20, 'cat-4', 'https://picsum.photos/200/200?random=5', NOW());
