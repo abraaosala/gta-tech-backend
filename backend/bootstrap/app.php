@@ -1,6 +1,6 @@
 <?php
 
-require_once dirname(__DIR__)."/config/base.php";
+require_once dirname(__DIR__) . "/config/base.php";
 require BASE . "/vendor/autoload.php";
 require BASE . "/bootstrap/database.php";
 
@@ -17,8 +17,10 @@ use Illuminate\Hashing\HashManager;
 use Illuminate\Hashing\HashServiceProvider;
 use Illuminate\Http\Request;
 
-$dotenv = Dotenv\Dotenv::createImmutable(BASE);
-$dotenv->load();
+if (file_exists(BASE . '/.env')) {
+    $dotenv = Dotenv\Dotenv::createImmutable(BASE);
+    $dotenv->load();
+}
 
 
 $container = new Container;

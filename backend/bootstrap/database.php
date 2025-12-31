@@ -1,16 +1,17 @@
 <?php
+
 use Illuminate\Database\Capsule\Manager as Capsule;
 
-require dirname(__DIR__).'/vendor/autoload.php';
+require dirname(__DIR__) . '/vendor/autoload.php';
 
 $capsule = new Capsule;
 
 // Configuração da base de dados
 $capsule->addConnection([
     'driver'    => 'mysql',
-    'host'      => '127.0.0.1',   // ou IP do servidor
-    'database'  => env('DB_NAME', 'gta_pos'),
-    'username'  => env('DB_USER','root'),
+    'host'      => env('DB_HOST', '127.0.0.1'),
+    'database'  => env('DB_DATABASE', 'gta_pos'),
+    'username'  => env('DB_USERNAME', 'root'),
     'password'  => env('DB_PASSWORD', ''),
     'charset'   => 'utf8',
     'collation' => 'utf8_unicode_ci',
