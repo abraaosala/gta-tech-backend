@@ -16,6 +16,7 @@ $capsule->addConnection([
     'password'  => env('DB_PASSWORD', ''),
     'charset'   => 'utf8',
     'prefix'    => '',
+    'sslmode'   => 'prefer',
 ]);
 
 // Torna o Capsule global (opcional, para usar static methods)

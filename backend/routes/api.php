@@ -40,14 +40,30 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         'middleware' => 'auth'
     ], function ($router) {
         $router->get('/me', [ProfileController::class, 'index']);
-    
+
         $router->group([], function ($router) {
-        $router->resource('products', ProductController::class);
-        $router->resource('users', UserController::class);
-        $router->resource('categories', CategoryController::class);
-    });    
-        
-});
+            $router->resource('products', ProductController::class);
+            $router->resource('users', UserController::class);
+            $router->resource('categories', CategoryController::class);
+        });
+    });
 
 
+    $router->get('/db-check', function () {
+        try {
+            $dbName = DB::connection()->getDatabaseName();
+            $driver = DB::connection()->getConfig('driver');
+            return response()->json([
+                'success' => true,
+                'message' => 'Database connection successful',
+                'database' => $dbName,
+                'driver' => $driver
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Database connection failed: ' . $e->getMessage()
+            ], 500);
+        }
+    });
 });

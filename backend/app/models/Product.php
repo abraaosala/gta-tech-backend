@@ -1,4 +1,5 @@
 <?php
+
 namespace app\models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -7,8 +8,10 @@ class Product extends Model
 {
     protected $table = 'products';
     protected $primaryKey = 'id';
+    public $incrementing = false;
+    protected $keyType = 'string';
 
-    protected $fillable = [  
+    protected $fillable = [
         'id',
         'name',
         'description',
@@ -16,14 +19,14 @@ class Product extends Model
         'stock',
         'image_url',
         'category_id'
-      ];
+    ];
 
-      
-    
-        public $timestamps = false;
 
-    public function category(){
+
+    public $timestamps = false;
+
+    public function category()
+    {
         return $this->belongsTo(Category::class, 'category_id');
     }
-    
 }

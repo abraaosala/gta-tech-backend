@@ -2,25 +2,14 @@
 
 require_once dirname(__DIR__) . "/config/base.php";
 require BASE . "/vendor/autoload.php";
-require BASE . "/bootstrap/database.php";
-
-require BASE . "/vendor/illuminate/support/helpers.php";
-require BASE . "/app/helper/helper.php";
-
-use Illuminate\Container\Container;
-use Illuminate\Events\Dispatcher;
-use Illuminate\Routing\Router;
-use Illuminate\Routing\RoutingServiceProvider;
-use Illuminate\Support\Facades\Facade;
-use app\repository\ConfigRepository;
-use Illuminate\Hashing\HashManager;
-use Illuminate\Hashing\HashServiceProvider;
-use Illuminate\Http\Request;
-
 if (file_exists(BASE . '/.env')) {
     $dotenv = Dotenv\Dotenv::createImmutable(BASE);
     $dotenv->load();
 }
+
+require BASE . "/bootstrap/database.php";
+require BASE . "/vendor/illuminate/support/helpers.php";
+require BASE . "/app/helper/helper.php";
 
 
 $container = new Container;
