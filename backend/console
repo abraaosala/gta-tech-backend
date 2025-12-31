@@ -1,0 +1,247 @@
+<?php
+
+require __DIR__ . "/bootstrap/app.php";
+// Definição de Caminhos Padrão (Semelhante ao Laravel)
+const PATHS = [
+    'model'      => BASE . '/app/models',
+    'controller' => BASE . '/app/http/controllers',
+    'middleware' => BASE . '/app/Http/Middleware',
+    'view'       => BASE . '/app/views',
+    'service'    => BASE . '/app/Services', // Exemplo de "Outros"
+];
+
+
+// Cores para o terminal
+const COLOR_GREEN = "\033[32m";
+const COLOR_RED   = "\033[31m";
+const COLOR_YELLOW = "\033[33m";
+const COLOR_RESET = "\033[0m";
+
+
+// ==========================================
+// LÓGICA PRINCIPAL
+// ==========================================
+
+// Verifica argumentos
+if ($argc < 2) {
+    showHelp();
+    exit(1);
+}
+
+
+$command = $argv[1];
+$name    = $argv[2] ?? null;
+
+$maker = explode(':', $command);
+
+if (in_array( $maker[1], ['controller', 'middleware', 'service'])) {
+    $name .= ucfirst($maker[1]); 
+}
+
+switch ($command) {
+    case 'make:model':
+        generateFile('model', $name, getModelTemplate($name));
+        break;
+
+    case 'make:controller':
+        generateFile('controller', $name, getControllerTemplate($name));
+        break;
+
+    case 'make:middleware':
+        generateFile('middleware', $name, getMiddlewareTemplate($name));
+        break;
+
+    case 'make:view':
+        // Views podem ter subpastas (ex: home/index)
+        generateFile('view', $name, getViewTemplate($name));
+        break;
+
+    case 'make:service':
+        generateFile('service', $name, getServiceTemplate($name));
+        break;
+
+    default:
+        error("Comando '{$command}' não reconhecido.");
+}// ==========================================
+// FUNÇÕES AUXILIARES (CORE)
+// ==========================================
+
+/**
+ * Função genérica para criar arquivos
+ */
+function generateFile($type, $name, $content, $extension = '.php')
+{
+    if (!$name) {
+        error("Você precisa informar o nome do arquivo.\nExemplo: php console make:{$type} Nome");
+    }
+
+    // Tratamento do caminho (Permite subpastas na View ex: users/index)
+    $basePath = PATHS[$type];
+    $relativePath = str_replace(['\\', '/'], DIRECTORY_SEPARATOR, $name);
+
+    // Caminho completo do arquivo
+    $fullPath = $basePath . '/' . $relativePath . $extension;
+
+    // Pasta onde o arquivo ficará (usando dirname para garantir que subpastas existam)
+    $directory = dirname($fullPath);
+
+    // 1. Cria o diretório se não existir
+    if (!is_dir($directory)) {
+        mkdir($directory, 0755, true);
+    }
+
+    // 2. Verifica se arquivo já existe
+    if (file_exists($fullPath)) {
+        error("O {$type} '{$name}' já existe!");
+    }
+
+    // 3. Cria o arquivo
+    if (file_put_contents($fullPath, $content)) {
+        info(ucfirst($type) . " criado com sucesso: " . $fullPath);
+        // info(ucfirst($type) . " criado com sucesso: " . str_replace(BASE_PATH, '', $fullPath));
+    } else {
+        error("Erro ao criar o arquivo.");
+    }
+}
+
+function info($message)
+{
+    echo COLOR_GREEN . "SUCCESS: " . COLOR_RESET . $message . PHP_EOL;
+}
+
+function error($message)
+{
+    echo COLOR_RED . "ERROR: " . COLOR_RESET . $message . PHP_EOL;
+    exit(1);
+}
+
+function showHelp()
+{
+    echo COLOR_YELLOW . "Uso do CLI Personalizado:" . COLOR_RESET . PHP_EOL;
+    echo "  php console make:model NomeModel" . PHP_EOL;
+    echo "  php console make:controller NomeController" . PHP_EOL;
+    echo "  php console make:middleware NomeMiddleware" . PHP_EOL;
+    echo "  php console make:view pasta/nome_view" . PHP_EOL;
+    echo "  php console make:service NomeService" . PHP_EOL;
+}
+
+// ==========================================
+// TEMPLATES (HEREDOCS)
+// ==========================================
+
+function getModelTemplate($name)
+{
+    $className = basename(str_replace(['\\', '/'], '/', $name));
+    $tableName = strtolower($className) . 's';
+    return <<<PHP
+<?php
+namespace app\models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class {$className} extends Model
+{
+    protected \$table = '{$tableName}';
+    protected \$primaryKey = 'id';
+
+    protected \$fillable = [    ];
+    
+        public \$timestamps = true;
+
+    
+}
+PHP;
+}
+
+function getControllerTemplate($name)
+{
+
+    $className = basename(str_replace(['\\', '/'], '/', $name));
+    return <<<PHP
+<?php
+
+namespace app\Http\controllers;
+
+use App\Http\Controller;
+
+
+class {$className} extends Controller
+{
+    public function index()
+    {
+        // Listar itens
+    }
+
+    public function show(\$id)
+    {
+        // Mostrar um item
+    }
+    public function update(\$id)
+    {
+        // Actualizar um item
+    }
+    public function delete(\$id)
+    {
+        // Deletar um item
+    }
+    
+    public function store()
+    {
+        // Salvar item
+    }
+}
+PHP;
+}
+
+function getMiddlewareTemplate($name)
+{
+    $className = basename(str_replace(['\\', '/'], '/', $name));
+    return <<<PHP
+<?php
+
+namespace App\Http\Middleware;
+
+class {$className}
+{
+    public function handle(\$request, \$next)
+    {
+        // Lógica antes da requisição
+        
+        return \$next(\$request);
+    }
+}
+PHP;
+}
+
+// function getViewTemplate($name)
+// {
+//     return <<<Blade
+//     {{--  --}}    
+
+// Blade;
+// }
+function getViewTemplate($name)
+{
+    return <<<PHP
+       
+
+PHP;
+}
+
+function getServiceTemplate($name)
+{
+    $className = basename(str_replace(['\\', '/'], '/', $name));
+    return <<<PHP
+<?php
+
+namespace App\Services;
+
+class {$className}
+{
+    public function execute()
+    {
+        // Lógica de negócio
+    }
+}
+PHP;
+}
