@@ -27,6 +27,7 @@
         "illuminate/validation": "^12.44",
         "illuminate/translation": "^12.44",
         "symfony/http-foundation": "^7.4",
-        "illuminate/hashing": "^12.44"
+        "illuminate/hashing": "^12.44",
+        "monolog/monolog": "^3.9"
     }
 }

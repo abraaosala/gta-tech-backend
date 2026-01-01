@@ -13,6 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 require dirname(__DIR__) . "/vendor/autoload.php";
 
 use Illuminate\Http\Request;
+use app\classes\Logger;
 
 
 try {
@@ -29,6 +30,12 @@ try {
 
     $response->send(); //code...
 } catch (Throwable $e) {
+    Logger::error($e->getMessage(), [
+        'file' => $e->getFile(),
+        'line' => $e->getLine(),
+        'trace' => $e->getTraceAsString()
+    ]);
+
     response()->json([
         'success' => false,
         'details' => $e->getMessage(),
