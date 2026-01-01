@@ -2,8 +2,8 @@
 
 namespace app\Http\controllers\admin;
 
-use app\Http\Response;
 use app\models\Category;
+use app\classes\UUID;
 use Illuminate\Http\Request;
 
 class CategoryController
@@ -36,6 +36,7 @@ class CategoryController
     {
         $data = json_decode($request->getContent(), true);
 
+        $data['id'] = (string) UUID::v4();
         $data['created_at'] = date('Y-m-d H:i:s');
 
         $category = Category::create($data);

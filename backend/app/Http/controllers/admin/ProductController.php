@@ -78,8 +78,7 @@ class ProductController
         $validator->validate($data, $rules);
 
         // Gera ID único
-        // $data['id'] = UUID::v4();
-        $data['id'] = (string) id_regeneretor();
+        $data['id'] = (string) UUID::v4();
 
         // Conversão explícita para evitar erros de tipagem no PostgreSQL
         $data['price_in_cents'] = (int) $data['price_in_cents'];
