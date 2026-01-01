@@ -1,16 +1,5 @@
 <?php
 
-// Permite requisições de qualquer origem (teste)
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Credentials: true");
-header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
-header("Access-Control-Allow-Headers: Authorization, Content-Type, X-Requested-With, Cache-Control");
-
-// Para OPTIONS preflight
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    exit(0);
-}
-
 use app\Http\controllers\admin\ProductController;
 use app\Http\controllers\admin\SaleController;
 use app\Http\controllers\admin\CategoryController;

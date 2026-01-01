@@ -2,8 +2,6 @@
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 
-require dirname(__DIR__) . '/vendor/autoload.php';
-
 $capsule = new Capsule;
 
 // Configuração da base de dados

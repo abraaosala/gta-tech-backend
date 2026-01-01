@@ -1,4 +1,14 @@
 <?php
+// Permite requisições de qualquer origem (CORS)
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+header("Access-Control-Allow-Headers: Authorization, Content-Type, X-Requested-With, Cache-Control");
+
+// Para OPTIONS preflight
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    exit(0);
+}
+
 
 require dirname(__DIR__) . "/vendor/autoload.php";
 
