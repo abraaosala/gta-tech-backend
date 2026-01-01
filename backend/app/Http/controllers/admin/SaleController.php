@@ -65,11 +65,11 @@ class SaleController
         try {
             DB::beginTransaction();
 
-            $saleId = UUID::v4();
+            $saleId = (string) UUID::v4();
             $sale = new Sale();
             $sale->id = $saleId;
             $sale->seller_id = $data['sellerId'];
-            $sale->total_in_cents = (int)($data['total'] * 100);
+            $sale->total_in_cents = (int)round($data['total'] * 100);
             $sale->payment_method = $data['paymentMethod'];
             $sale->status = 'COMPLETED';
             $sale->created_at = date('Y-m-d H:i:s');
@@ -89,12 +89,12 @@ class SaleController
                 $product->save();
 
                 $saleItem = new SaleItem();
-                $saleItem->id = UUID::v4();
+                $saleItem->id = (string) UUID::v4();
                 $saleItem->sale_id = $saleId;
                 $saleItem->product_id = $product->id;
                 $saleItem->product_name = $product->name;
-                $saleItem->price_in_cents = (int)($item['price'] * 100);
-                $saleItem->quantity = $item['quantity'];
+                $saleItem->price_in_cents = (int)round($item['price'] * 100);
+                $saleItem->quantity = (int) $item['quantity'];
                 $saleItem->save();
             }
 

@@ -79,7 +79,11 @@ class ProductController
 
         // Gera ID único
         // $data['id'] = UUID::v4();
-        $data['id'] = id_regeneretor();
+        $data['id'] = (string) id_regeneretor();
+
+        // Conversão explícita para evitar erros de tipagem no PostgreSQL
+        $data['price_in_cents'] = (int) $data['price_in_cents'];
+        $data['stock'] = (int) $data['stock'];
 
         // Define created_at no servidor
         $data['created_at'] = date('Y-m-d H:i:s');
@@ -97,7 +101,7 @@ class ProductController
 
     public function update($id, Request $request, Validator $validator, Response $response)
     {
-        
+
         // Busca o produto
         $product = Product::find($id);
         if (!$product) {
@@ -119,6 +123,14 @@ class ProductController
 
         // Validação
         $validator->validate($data, $rules);
+
+        // Conversão explícita para evitar erros de tipagem no PostgreSQL
+        if (isset($data['price_in_cents'])) {
+            $data['price_in_cents'] = (int) $data['price_in_cents'];
+        }
+        if (isset($data['stock'])) {
+            $data['stock'] = (int) $data['stock'];
+        }
 
         // Atualiza data no servidor
         // $data['updated_at'] = date('Y-m-d H:i:s');

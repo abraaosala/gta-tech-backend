@@ -77,7 +77,7 @@ class UserController
         $validator->validate($data, $rules);
 
         // Gera ID único
-        $data['id'] = UUID::v4();
+        $data['id'] = (string) UUID::v4();
         // $data['id'] = id_regeneretor();
 
 
