@@ -4,7 +4,7 @@ use app\Http\controllers\admin\ProductController;
 use app\Http\controllers\admin\SaleController;
 use app\Http\controllers\admin\CategoryController;
 use app\Http\controllers\AuthController;
-use app\http\controllers\ProfileController;
+use app\Http\controllers\ProfileController;
 use app\Http\controllers\admin\UserController;
 use app\models\Category;
 use Firebase\JWT\JWK;

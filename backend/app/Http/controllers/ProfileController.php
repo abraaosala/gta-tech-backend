@@ -1,6 +1,6 @@
 <?php
 
-namespace app\http\controllers;
+namespace app\Http\controllers;
 
 use app\Http\Response;
 use app\Support\Auth;
