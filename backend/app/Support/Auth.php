@@ -28,13 +28,13 @@ class Auth
         }
 
         try {
+            $key = env('JWT_SECRET') ?: env('KEY');
             $decoded = JWT::decode(
                 $token,
-                new Key(env('KEY'), env('ALG', 'HS256'))
+                new Key($key, env('ALG', 'HS256'))
             );
 
             return self::$user = $decoded->data ?? null;
-
         } catch (\Throwable $e) {
             return response()->error($e->getMessage(), [], 401);
         }

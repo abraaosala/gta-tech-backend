@@ -3,12 +3,10 @@
 namespace app\Http\controllers;
 
 use app\classes\Validator;
-use App\Http\Controller;
 use app\Http\Response;
 use app\models\User;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -56,9 +54,10 @@ class AuthController
     ];
 
     try {
+        $key = env('JWT_SECRET') ?: env('KEY');
         return $response->json([
-            'access_token'  => JWT::encode($accessPayload, env('KEY'), env('ALG', 'HS256')),
-            'refresh_token' => JWT::encode($refreshPayload, env('KEY'), env('ALG', 'HS256'))
+            'access_token'  => JWT::encode($accessPayload, $key, env('ALG', 'HS256')),
+            'refresh_token' => JWT::encode($refreshPayload, $key, env('ALG', 'HS256'))
         ]);
     } catch (\Throwable $e) {
         return $response->error("Erro ao gerar token", [], 500);
@@ -86,9 +85,10 @@ public function refresh(Request $request, Response $response)
 
     try {
 
+        $key = env('JWT_SECRET') ?: env('KEY');
         $decoded = JWT::decode(
             $refreshToken,
-            new Key(env('KEY'), env('ALG', 'HS256'))
+            new Key($key, env('ALG', 'HS256'))
         );
 
         // 🔐 garante que é refresh token
@@ -110,9 +110,10 @@ public function refresh(Request $request, Response $response)
             'data' => $user
         ];
 
+        $key = env('JWT_SECRET') ?: env('KEY');
         $newAccessToken = JWT::encode(
             $payload,
-            env('KEY'),
+            $key,
             env('ALG', 'HS256')
         );
 

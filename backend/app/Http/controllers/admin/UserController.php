@@ -1,6 +1,6 @@
 <?php
 
-namespace app\http\controllers\admin;
+namespace app\Http\controllers\admin;
 
 use app\classes\Validator;
 use app\classes\UUID;
@@ -79,7 +79,7 @@ class UserController
         // Gera ID único
         $data['id'] = UUID::v4();
         // $data['id'] = id_regeneretor();
-        
+
 
         $data['password_hash'] = Hash::make($data['password']);
         unset($data['password']);
