@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Bus;
 require_once dirname(__DIR__) . "/config/base.php";
 require BASE . "/vendor/autoload.php";
 if (file_exists(BASE . '/.env')) {
-    $dotenv = Dotenv\Dotenv::createImmutable(BASE);
+    $dotenv = Dotenv\Dotenv::createUnsafeImmutable(BASE);
     $dotenv->load();
 }
 

@@ -22,6 +22,17 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->post('/login', [AuthController::class, 'login']);
     $router->post('/refresh', [AuthController::class, 'refresh']);
 
+    $router->get('/debug-env', function () {
+        return response()->json([
+            'DB_DRIVER'   => env('DB_DRIVER'),
+            'DB_HOST'     => env('DB_HOST'),
+            'DB_PORT'     => env('DB_PORT'),
+            'DB_DATABASE' => env('DB_DATABASE'),
+            'DB_USERNAME' => env('DB_USERNAME'),
+            // 'DB_PASSWORD' => '********', // Omitido por segurança
+        ]);
+    });
+
     $router->resource('sales', SaleController::class);
 
 
