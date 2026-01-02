@@ -26,9 +26,6 @@ class ProductController
             ->limit($perPage)
             ->offset($offset)
             ->get();
-        if ($products->count() === 0) {
-            $response->notFound('Produto');
-        }
 
         return $response->json([
             'success' => true,
