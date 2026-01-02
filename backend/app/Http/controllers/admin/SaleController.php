@@ -15,7 +15,7 @@ class SaleController
 {
     public function index()
     {
-        $sales = Sale::with(['items', 'seller'])->orderBy('created_at', 'desc')->get();
+        $sales = Sale::with(['items.product.category', 'seller'])->orderBy('created_at', 'desc')->get();
         // Transform user to match frontend expectation (sellerName) if needed, 
         // or frontend can adapt. Frontend uses sale.sellerName. 
         // Let's modify the response or ensure model serialization handles it.
