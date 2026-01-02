@@ -10,6 +10,7 @@ use app\models\Category;
 use Firebase\JWT\JWK;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
+use app\Http\controllers\PublicController;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpKernel\Profiler\Profile;
 
@@ -19,8 +20,10 @@ $router->get('/', function () {
 $router->group(['prefix' => 'api'], function () use ($router) {
 
 
-    $router->post('/login', [AuthController::class, 'login']);
-    $router->post('/refresh', [AuthController::class, 'refresh']);
+    // Rotas Públicas para Landing Page
+    $router->get('/public/services', [PublicController::class, 'getServices']);
+    $router->get('/public/reviews', [PublicController::class, 'getReviews']);
+    $router->post('/public/contact', [PublicController::class, 'storeContact']);
 
     $router->get('/debug-env', function () {
         return response()->json([
