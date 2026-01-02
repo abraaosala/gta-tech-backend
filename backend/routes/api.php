@@ -21,6 +21,11 @@ $router->get('/', function () {
 $router->group(['prefix' => 'api'], function () use ($router) {
 
 
+    // Autenticação
+    $router->post('/login', [AuthController::class, 'login']);
+    $router->post('/logout', [AuthController::class, 'logout']);
+    $router->post('/refresh', [AuthController::class, 'refresh']);
+
     // Rotas Públicas para Landing Page
     $router->get('/public/settings', [PublicController::class, 'getSettings']);
     $router->get('/public/services', [PublicController::class, 'getServices']);
