@@ -5,6 +5,7 @@ namespace app\Http\controllers;
 use app\models\LandingService;
 use app\models\LandingReview;
 use app\models\LandingContact;
+use app\models\LandingSetting;
 use app\Http\Response;
 use app\classes\UUID;
 use app\classes\Validator;
@@ -12,6 +13,18 @@ use Illuminate\Http\Request;
 
 class PublicController
 {
+    /**
+     * Get all public settings for landing page
+     */
+    public function getSettings(Response $response)
+    {
+        $settings = LandingSetting::all()->pluck('value', 'key');
+        return $response->json([
+            'success' => true,
+            'data' => $settings
+        ]);
+    }
+
     /**
      * Get all active services for landing page
      */

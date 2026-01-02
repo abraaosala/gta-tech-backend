@@ -6,6 +6,7 @@ use app\Http\controllers\admin\CategoryController;
 use app\Http\controllers\AuthController;
 use app\Http\controllers\ProfileController;
 use app\Http\controllers\admin\UserController;
+use app\Http\controllers\admin\LandingController;
 use app\models\Category;
 use Firebase\JWT\JWK;
 use Firebase\JWT\JWT;
@@ -21,6 +22,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
 
 
     // Rotas Públicas para Landing Page
+    $router->get('/public/settings', [PublicController::class, 'getSettings']);
     $router->get('/public/services', [PublicController::class, 'getServices']);
     $router->get('/public/reviews', [PublicController::class, 'getReviews']);
     $router->post('/public/contact', [PublicController::class, 'storeContact']);
@@ -48,6 +50,13 @@ $router->group(['prefix' => 'api'], function () use ($router) {
             $router->resource('products', ProductController::class);
             $router->resource('users', UserController::class);
             $router->resource('categories', CategoryController::class);
+
+            // Gestão da Landing Page
+            $router->get('/admin/landing/settings', [LandingController::class, 'getSettings']);
+            $router->post('/admin/landing/settings', [LandingController::class, 'updateSetting']);
+            $router->get('/admin/landing/contacts', [LandingController::class, 'getContacts']);
+            $router->delete('/admin/landing/contacts/{id}', [LandingController::class, 'deleteContact']);
+            $router->resource('landing/services', \app\Http\controllers\admin\ProductController::class); // Reutilizando para serviços se desejar, ou criaremos um específico depois
         });
     });
 
