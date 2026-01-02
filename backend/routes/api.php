@@ -61,7 +61,10 @@ $router->group(['prefix' => 'api'], function () use ($router) {
             $router->post('/admin/landing/settings', [LandingController::class, 'updateSetting']);
             $router->get('/admin/landing/contacts', [LandingController::class, 'getContacts']);
             $router->delete('/admin/landing/contacts/{id}', [LandingController::class, 'deleteContact']);
-            $router->resource('landing/services', \app\Http\controllers\admin\ProductController::class); // Reutilizando para serviços se desejar, ou criaremos um específico depois
+            $router->get('/admin/landing/services', [LandingController::class, 'getServices']);
+            $router->post('/admin/landing/services', [LandingController::class, 'storeService']);
+            $router->post('/admin/landing/services/{id}', [LandingController::class, 'updateService']);
+            $router->delete('/admin/landing/services/{id}', [LandingController::class, 'deleteService']);
         });
     });
 
