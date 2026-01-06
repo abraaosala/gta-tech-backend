@@ -70,6 +70,7 @@ class ProductController
             'price_in_cents'  => 'required|numeric',
             'stock'           => 'required|integer',
             'category_id'     => 'required',
+            'imei'            => 'nullable|string',
         ];
 
         $validator->validate($data, $rules);
@@ -115,6 +116,7 @@ class ProductController
             'name'            => 'min:2',
             'price_in_cents'  => 'numeric',
             'stock'           => 'integer',
+            'imei'            => 'nullable|string',
         ];
 
         // Validação

@@ -18,7 +18,8 @@ class Product extends Model
         'price_in_cents',
         'stock',
         'image_url',
-        'category_id'
+        'category_id',
+        'imei'
     ];
 
 
