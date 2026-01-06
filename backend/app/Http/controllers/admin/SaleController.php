@@ -57,7 +57,9 @@ class SaleController
             'sellerId' => 'required',
             'total' => 'required',
             'paymentMethod' => 'required|string',
-            'items' => 'required|array'
+            'paymentMethod' => 'required|string',
+            'items' => 'required|array',
+            'customerId' => 'nullable|string'
         ];
         $validator->validate($data, $rules);
 
@@ -69,6 +71,7 @@ class SaleController
             $sale = new Sale();
             $sale->id = $saleId;
             $sale->seller_id = $data['sellerId'];
+            $sale->customer_id = $data['customerId'] ?? null;
             $sale->total_in_cents = (int)round($data['total'] * 100);
             $sale->payment_method = $data['paymentMethod'];
             $sale->status = 'COMPLETED';
@@ -104,6 +107,7 @@ class SaleController
             return response()->json([
                 'id' => $sale->id,
                 'sellerId' => $sale->seller_id,
+                'customerId' => $sale->customer_id,
                 'total' => $sale->total_in_cents / 100,
                 'date' => $sale->created_at,
                 'items' => $data['items'] // Return what was sent essentially, or re-fetch

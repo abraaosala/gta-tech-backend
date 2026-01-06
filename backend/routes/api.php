@@ -55,6 +55,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
             $router->resource('products', ProductController::class);
             $router->resource('users', UserController::class);
             $router->resource('categories', CategoryController::class);
+            $router->resource('customers', \app\Http\controllers\admin\CustomerController::class);
 
             // Gestão da Landing Page
             $router->get('/admin/landing/settings', [LandingController::class, 'getSettings']);

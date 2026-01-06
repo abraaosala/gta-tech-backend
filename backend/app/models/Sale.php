@@ -16,7 +16,8 @@ class Sale extends Model
         'total_in_cents',
         'payment_method',
         'status',
-        'created_at'
+        'created_at',
+        'customer_id'
     ];
 
     public $timestamps = false; // logic handles created_at manually or default
@@ -29,5 +30,10 @@ class Sale extends Model
     public function seller()
     {
         return $this->belongsTo(User::class, 'seller_id');
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class, 'customer_id');
     }
 }
