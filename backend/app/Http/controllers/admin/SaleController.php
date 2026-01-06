@@ -88,8 +88,8 @@ class SaleController
                     throw new \Exception("Estoque insuficiente para: " . $product->name);
                 }
 
-                $product->stock -= $item['quantity'];
-                $product->save();
+                // Decrease stock using decrement (more reliable)
+                $product->decrement('stock', $item['quantity']);
 
                 $saleItem = new SaleItem();
                 $saleItem->id = (string) UUID::v4();
